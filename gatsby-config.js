@@ -1,5 +1,7 @@
+const { buildClientSchema } = require("graphql")
 const { PrismicLink } = require('apollo-link-prismic');
 
+const introspectionQuery = require('./utils/introspectionQuery');
 
 const REPO_NAME = "gatsby-starter-default-source-graphql-prismic";
 const GRAPHQL_ENDPOINT = `https://${REPO_NAME}.prismic.io/graphql`;
@@ -46,6 +48,9 @@ module.exports = {
           // repositoryName: REPO_NAME
           uri: GRAPHQL_ENDPOINT,
         }),
+        createSchema: async() => {
+          return introspectionQuery(REPO_NAME).then(buildClientSchema);
+        }
       }
     }
   ],
