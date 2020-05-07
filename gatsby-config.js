@@ -1,3 +1,9 @@
+const { PrismicLink } = require('apollo-link-prismic');
+
+
+const REPO_NAME = "gatsby-starter-default-source-graphql-prismic";
+const GRAPHQL_ENDPOINT = `https://${REPO_NAME}.prismic.io/graphql`;
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -30,5 +36,17 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "PRISMIC",
+        fieldName: "prismic",
+        createLink: () => new PrismicLink({
+          // repositoryName: REPO_NAME
+          uri: GRAPHQL_ENDPOINT,
+        }),
+      }
+    }
   ],
 }
